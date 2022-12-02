@@ -1,12 +1,12 @@
 package com.company;
 
 import com.company.entities.Player;
-import com.company.entities.Race;
 
 public class Game {
-    private final String name = "nic";
-    public final double version = 0.1;
+    private final String name = "Kindergarten - SPSMB DLC";
+    public final double version = 0.2;
     private final String author = "Ja";
+    private GameDif gameDif;
     private GameDialog gameDialog;
     private Player player;
 
@@ -22,37 +22,37 @@ public class Game {
 
     }
     private void introMenu(){
-        gameDialog.say("Vitej v poklidnem. V mestecku bydli tisice lidi. Je cas na vyber postavy.");
-        gameDialog.say("Zvol si svoji rasu:", "red");
-        for (Race value : Race.values()) {
+        gameDialog.say("Vítejte v kůži Tomáše Ďurána, který chodí na Střední průmyslovou školu do Mladé Boleslavi, kde se ztratila Kája společně s virtuální realitou." +
+                "\nNaposledy byla viděna včera ve škole na poslední hodině programovaní. I přesto jste nedostali reditelské volno a tak se vydávate do školy.");
+        gameDialog.say("Zvol si míru postižení", "red");
+        for (GameDif value : GameDif.values()) {
             gameDialog.say(value.toString(), "purple");
         }
-        selectRace();
+        selectDif();
 
     }
 
-    private void selectRace(){
+    private void selectDif(){
         String userInput = gameDialog.userInput();
         boolean check = false;
-        for (Race value : Race.values()) {
+        for (GameDif value : GameDif.values()) {
             if (userInput.trim().equalsIgnoreCase(value.toString())){
                 check = true;
-                player.setRace(value);
+                gameDif = value;
                 break;
             }
         }
         if (!check) {
             System.out.println("Neplatny vstup");
-            selectRace();
-            return;
+            selectDif();
         }
 
     }
     private void storyIntro(){
-        gameDialog.say("Zvolil si rasu " + player.getRace(), "red");
-        gameDialog.say("--------------------------------", "white");
-        gameDialog.say("            Hra zacina"          );
-        gameDialog.say("--------------------------------", "white");
+        gameDialog.say("Zvolil jsi mírů postižení: " + gameDif, "red");
+        gameDialog.say("--------------------------------", "green");
+        gameDialog.say("            Hra zacina"          , "red");
+        gameDialog.say("--------------------------------", "green");
         gameDialog.say("Vitej v poklidnem mestecku, kde tisice lidi prezivaji tvoji existnci");
 
     }
